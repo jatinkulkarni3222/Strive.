@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: strive-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: strivedb
+      POSTGRES_USER: strive
+      POSTGRES_PASSWORD: strivepass
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U strive -d strivedb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  cv-service:
+    build:
+      context: ./cv-service
+      dockerfile: Dockerfile
+    container_name: strive-cv-service
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./cv-service/storage:/app/storage
+      - ./data/samples:/data/samples
+    environment:
+      - PORT=8000
+      - MPLCONFIGDIR=/tmp/mpl
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: strive-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      cv-service:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/strivedb
+      - SPRING_DATASOURCE_USERNAME=strive
+      - SPRING_DATASOURCE_PASSWORD=strivepass
+      - SPRING_DATASOURCE_DRIVER=org.postgresql.Driver
+      - CV_SERVICE_URL=http://cv-service:8000
+    volumes:
+      - ./backend/storage:/app/storage
+
+  frontend:
+    image: nginx:alpine
+    container_name: strive-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

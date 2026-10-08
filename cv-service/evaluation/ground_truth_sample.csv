@@ -1,0 +1,10 @@
+video_name,sport,ground_truth_reps,ground_truth_score,ground_truth_rom_knee_angle,ground_truth_valgus,ground_truth_forward_lean
+sample_squat.mp4,squat,5,88.0,68.0,True,False
+benchmark_squat_01.mp4,squat,4,82.5,75.0,False,True
+benchmark_squat_02.mp4,squat,6,92.0,65.0,False,False
+benchmark_squat_03.mp4,squat,3,76.0,85.0,True,True
+benchmark_squat_04.mp4,squat,5,94.0,62.0,False,False
+benchmark_pushup_01.mp4,pushup,8,86.0,82.0,False,False
+benchmark_pushup_02.mp4,pushup,10,91.5,78.0,False,False
+benchmark_jump_01.mp4,vertical_jump,1,85.0,38.5,False,False
+benchmark_jump_02.mp4,vertical_jump,1,72.0,28.0,True,False

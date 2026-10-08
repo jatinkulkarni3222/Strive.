@@ -1,0 +1,185 @@
+/* STRIVE Modern Mobile-First Sports Biomechanics Styling */
+:root {
+    --strive-bg: #0b1120;
+    --strive-card: #151f32;
+    --strive-card-hover: #1e293b;
+    --strive-border: #24344d;
+    --strive-primary: #10b981;
+    --strive-primary-glow: rgba(16, 185, 129, 0.25);
+    --strive-secondary: #06b6d4;
+    --strive-accent: #3b82f6;
+    --strive-warning: #f59e0b;
+    --strive-danger: #ef4444;
+    --strive-text: #f8fafc;
+    --strive-muted: #94a3b8;
+}
+
+body {
+    background-color: var(--strive-bg);
+    color: var(--strive-text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar-strive {
+    background-color: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--strive-border);
+}
+
+.brand-badge {
+    background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    color: #022c22;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* Cards */
+.strive-card {
+    background-color: var(--strive-card);
+    border: 1px solid var(--strive-border);
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.strive-card:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* Score Circle Widget */
+.score-circle {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    border: 6px solid var(--strive-primary);
+    box-shadow: 0 0 25px var(--strive-primary-glow);
+    background: radial-gradient(circle, #102a24 0%, #151f32 70%);
+}
+
+.score-number {
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+}
+
+.score-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--strive-muted);
+}
+
+/* Metric Pill */
+.metric-box {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--strive-border);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+}
+
+.metric-box .metric-val {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--strive-secondary);
+}
+
+.metric-box .metric-name {
+    font-size: 0.72rem;
+    color: var(--strive-muted);
+    text-transform: uppercase;
+}
+
+/* Video Player Box */
+.video-preview-wrapper {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #000;
+    border: 1px solid var(--strive-border);
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-preview-wrapper video {
+    width: 100%;
+    max-height: 480px;
+    object-fit: contain;
+}
+
+/* Badges */
+.badge-risk-low {
+    background-color: rgba(16, 185, 129, 0.18);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.badge-risk-medium {
+    background-color: rgba(245, 158, 11, 0.18);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.badge-risk-high {
+    background-color: rgba(239, 68, 68, 0.18);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+/* Upload Dropzone */
+.dropzone-box {
+    border: 2px dashed var(--strive-border);
+    border-radius: 14px;
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    background: rgba(15, 23, 42, 0.4);
+    transition: all 0.2s ease;
+}
+
+.dropzone-box:hover, .dropzone-box.dragover {
+    border-color: var(--strive-primary);
+    background: rgba(16, 185, 129, 0.05);
+}
+
+/* Medical Disclaimer Banner */
+.disclaimer-banner {
+    background: rgba(30, 41, 59, 0.5);
+    border-left: 4px solid var(--strive-warning);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.8rem;
+    color: #cbd5e1;
+}
+
+/* Mobile responsive padding */
+@media (max-width: 576px) {
+    .container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    .score-circle {
+        width: 110px;
+        height: 110px;
+    }
+    .score-number {
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRIVE | Coach Portal & Athlete Monitoring</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="assets/css/strive.css">
+</head>
+<body>
+
+    <!-- Coach Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-strive sticky-top py-2">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="coach.html">
+                <i class="bi bi-activity fs-4 text-success me-2"></i>
+                <span class="fs-5 text-white">STRIVE</span>
+                <span class="badge bg-info-subtle text-info border border-info-subtle ms-2">COACH PORTAL</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <div class="d-none d-md-block text-end">
+                    <div id="coachNavName" class="fw-bold text-white small">Coach Rutuja Magar</div>
+                    <div class="text-secondary" style="font-size: 0.75rem;">Sports Performance Specialist</div>
+                </div>
+                <button class="btn btn-outline-danger btn-sm" onclick="handleCoachLogout()">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container py-4">
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-8">
+                <h3 class="fw-bold text-white mb-1">Athlete Roster & Biomechanical Monitoring</h3>
+                <p class="text-secondary small mb-0">Evaluate assigned athletes, review movement kinematics, and attach targeted coaching interventions.</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-2 mt-md-0">
+                <span class="badge bg-secondary-subtle text-white p-2">
+                    <i class="bi bi-people me-1"></i> <span id="rosterCount">2</span> Athletes Monitored
+                </span>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            
+            <!-- Left Column: Athlete Roster List -->
+            <div class="col-lg-4">
+                <div class="strive-card p-3">
+                    <h6 class="fw-bold text-white mb-3">
+                        <i class="bi bi-person-lines-fill text-info me-2"></i>Assigned Athletes
+                    </h6>
+                    <div id="athleteRosterList" class="d-flex flex-column gap-2">
+                        <!-- Populated by coach.js -->
+                        <div class="text-center py-4 text-secondary">
+                            <span class="spinner-border spinner-border-sm me-2"></span>Loading athlete roster...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Athlete Deep Dive & Feedback Panel -->
+            <div class="col-lg-8">
+                
+                <!-- Selected Athlete Profile Header -->
+                <div class="strive-card p-4 mb-4">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start g-3 mb-3">
+                        <div>
+                            <span id="selectedAthleteSport" class="badge bg-success-subtle text-success me-2">SQUAT</span>
+                            <span id="selectedAthleteAge" class="badge bg-dark border border-secondary text-secondary me-2">U-21</span>
+                            <h4 id="selectedAthleteName" class="fw-bold text-white mt-2 mb-0">Vedant Patil</h4>
+                            <div id="selectedAthleteLocation" class="text-secondary small">Pune, Maharashtra</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="text-secondary small">Latest Session Score</div>
+                            <div id="selectedAthleteScore" class="fs-2 fw-bold text-success">90.0</div>
+                        </div>
+                    </div>
+
+                    <!-- Longitudinal Trend Line -->
+                    <h6 class="fw-bold text-white small mb-2">Longitudinal Session Trajectory</h6>
+                    <div style="position: relative; height: 180px;" class="mb-3">
+                        <canvas id="coachProgressChart"></canvas>
+                    </div>
+
+                    <!-- Coaching Feedback Form -->
+                    <div class="border-top border-secondary-subtle pt-3">
+                        <h6 class="fw-bold text-white small mb-2">
+                            <i class="bi bi-chat-left-dots text-warning me-1"></i> Personalized Coaching Notes & Corrections
+                        </h6>
+                        <form id="coachFeedbackForm" onsubmit="handleFeedbackSubmit(event)">
+                            <div class="mb-2">
+                                <textarea id="feedbackNotesInput" class="form-control bg-dark text-white border-secondary" rows="3" 
+                                          placeholder="Enter technical form observations, cueing advice, or drills..."></textarea>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div id="feedbackSavedAlert" class="small text-success d-none">
+                                    <i class="bi bi-check-circle me-1"></i> Feedback saved successfully!
+                                </div>
+                                <button type="submit" id="saveFeedbackBtn" class="btn btn-success btn-sm ms-auto px-3">
+                                    <i class="bi bi-send me-1"></i> Save Coaching Note
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/coach.js"></script>
+</body>
+</html>

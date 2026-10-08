@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRIVE | Athlete Dashboard & Biomechanical Assessment</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="assets/css/strive.css">
+</head>
+<body>
+
+    <!-- Athlete Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-strive sticky-top py-2">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="athlete.html">
+                <i class="bi bi-activity fs-4 text-success me-2"></i>
+                <span class="fs-5 text-white">STRIVE</span>
+                <span class="badge bg-success-subtle text-success border border-success-subtle ms-2">ATHLETE</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <div class="d-none d-md-block text-end">
+                    <div id="navUserName" class="fw-bold text-white small">Athlete</div>
+                    <div id="navUserDetail" class="text-secondary" style="font-size: 0.75rem;">Pune • U-21</div>
+                </div>
+                <button class="btn btn-outline-danger btn-sm" onclick="handleLogout()">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container py-4">
+
+        <!-- Top Header & Action Banner -->
+        <div class="row align-items-center mb-4 g-3">
+            <div class="col-md-7">
+                <h3 class="fw-bold text-white mb-1">Athletic Assessment & Progress</h3>
+                <p class="text-secondary small mb-0">Record or upload a smartphone movement video for automated computer vision evaluation.</p>
+            </div>
+            <div class="col-md-5 text-md-end">
+                <button class="btn btn-success fw-semibold shadow-sm" onclick="openUploadModal()">
+                    <i class="bi bi-camera-video me-2"></i> New Assessment
+                </button>
+            </div>
+        </div>
+
+        <!-- Latest Assessment Section (Dynamic) -->
+        <section id="latestAssessmentSection" class="mb-5">
+            <div class="row g-4">
+                
+                <!-- Left Column: Video & Skeleton Visualizer -->
+                <div class="col-lg-6">
+                    <div class="strive-card p-3 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="fw-bold text-white mb-0">
+                                <i class="bi bi-camera me-1 text-success"></i> Annotated Movement Analysis
+                            </h6>
+                            <span id="assessmentDateBadge" class="badge bg-secondary-subtle text-white small">Session Live</span>
+                        </div>
+
+                        <!-- Video Display Container -->
+                        <div class="video-preview-wrapper mb-3">
+                            <video id="annotatedVideoPlayer" controls playsinline poster="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&auto=format&fit=crop&q=80">
+                                <source id="videoSource" src="" type="video/mp4">
+                                Your browser does not support HTML5 video streaming.
+                            </video>
+                        </div>
+
+                        <!-- Video Metadata & Landmark Confidence -->
+                        <div class="d-flex justify-content-between align-items-center small text-secondary">
+                            <div>
+                                <i class="bi bi-shield-check text-success me-1"></i>
+                                Confidence: <strong id="confScoreText" class="text-white">--%</strong>
+                            </div>
+                            <div>
+                                <i class="bi bi-speedometer2 text-info me-1"></i>
+                                Deviation: <strong id="devScoreText" class="text-white">-- deg</strong>
+                            </div>
+                            <div>
+                                <i class="bi bi-stopwatch text-warning me-1"></i>
+                                Reps: <strong id="repCountText" class="text-white">--</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Biomechanical Scorecard & Injury Insights -->
+                <div class="col-lg-6">
+                    <div class="strive-card p-4 h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <span id="sportBadge" class="badge bg-success text-dark fw-bold me-2">SQUAT</span>
+                                    <span class="text-secondary small">Biomechanical Scorecard</span>
+                                </div>
+                                <span id="riskBadge" class="badge badge-risk-low px-3 py-1">LOW INJURY RISK</span>
+                            </div>
+
+                            <!-- Overall Score Circle -->
+                            <div class="text-center my-3">
+                                <div class="score-circle">
+                                    <div id="mainScoreNumber" class="score-number">--</div>
+                                    <div class="score-label">OVERALL</div>
+                                </div>
+                            </div>
+
+                            <!-- Sub-Scores Grid -->
+                            <div class="row g-2 my-3 text-center">
+                                <div class="col-3">
+                                    <div class="metric-box">
+                                        <div id="subScoreRom" class="metric-val">--</div>
+                                        <div class="metric-name">ROM Depth</div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="metric-box">
+                                        <div id="subScoreForm" class="metric-val">--</div>
+                                        <div class="metric-name">Technique</div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="metric-box">
+                                        <div id="subScoreCons" class="metric-val">--</div>
+                                        <div class="metric-name">Consistency</div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="metric-box">
+                                        <div id="subScoreKin" class="metric-val">--</div>
+                                        <div class="metric-name">Stability</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Injury Prevention Insights Card -->
+                            <div class="mb-3">
+                                <h6 class="fw-bold text-white small mb-2">
+                                    <i class="bi bi-exclamation-triangle text-warning me-1"></i> Biomechanical Form Insights
+                                </h6>
+                                <div id="insightsContainer" class="p-3 rounded" style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--strive-border); font-size: 0.85rem;">
+                                    <div class="text-secondary">Upload a movement video to inspect injury-risk factors and joint kinematics.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Medical Disclaimer -->
+                        <div class="disclaimer-banner mt-2">
+                            <i class="bi bi-info-circle me-1"></i>
+                            <strong>Screening Disclaimer:</strong> Not a medical diagnosis. Form insights are intended for training optimization.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Longitudinal Progress Chart Section -->
+        <section class="mb-5">
+            <div class="strive-card p-4">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 g-2">
+                    <div>
+                        <h5 class="fw-bold text-white mb-0">
+                            <i class="bi bi-graph-up-arrow text-success me-2"></i>Longitudinal Athlete Development
+                        </h5>
+                        <div class="text-secondary small">Historical score progression and session-over-session improvement percentage (Equation 1.9.9)</div>
+                    </div>
+                    <div>
+                        <select id="chartSportFilter" class="form-select form-select-sm bg-dark text-white border-secondary" onchange="loadProgressData()">
+                            <option value="SQUAT">Squat Progression</option>
+                            <option value="PUSHUP">Push-up Progression</option>
+                            <option value="VERTICAL_JUMP">Vertical Jump Progression</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="position: relative; height: 280px;">
+                    <canvas id="progressChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Upload Assessment Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content strive-card">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-white" id="uploadModalLabel">Record / Upload Assessment</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="assessmentUploadForm" onsubmit="handleVideoUpload(event)">
+                        
+                        <div class="mb-3">
+                            <label class="form-label text-secondary small">Select Movement / Sport</label>
+                            <select id="uploadSport" class="form-select bg-dark text-white border-secondary">
+                                <option value="squat">Bodyweight / Back Squat</option>
+                                <option value="pushup">Push-Up (Plank Press)</option>
+                                <option value="vertical_jump">Vertical Jump</option>
+                            </select>
+                        </div>
+
+                        <!-- Dropzone / Mobile Camera Input -->
+                        <div class="mb-3">
+                            <label class="form-label text-secondary small">Smartphone Video File or Camera Capture</label>
+                            <div class="dropzone-box" onclick="document.getElementById('videoFileInput').click()">
+                                <i class="bi bi-camera-reels fs-1 text-success mb-2"></i>
+                                <div class="fw-bold text-white" id="filePickerLabel">Tap to Record or Choose Video</div>
+                                <div class="text-secondary small mt-1">Accepts MP4, MOV, WEBM (Max 150 MB)</div>
+                            </div>
+                            <!-- Mobile native camera capture support via capture="environment" -->
+                            <input type="file" id="videoFileInput" accept="video/*" capture="environment" class="d-none" onchange="handleFileSelected(event)">
+                        </div>
+
+                        <!-- Progress Bar (hidden initially) -->
+                        <div id="uploadProgressContainer" class="d-none mb-3">
+                            <div class="d-flex justify-content-between small text-secondary mb-1">
+                                <span id="progressStatusText">Analyzing MediaPipe landmarks...</span>
+                                <span id="progressPercentage">0%</span>
+                            </div>
+                            <div class="progress bg-dark" style="height: 8px;">
+                                <div id="progressBar" class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div id="uploadAlert" class="alert alert-danger d-none py-2 small"></div>
+
+                        <button type="submit" id="submitAssessmentBtn" class="btn btn-success w-100 py-2 fw-semibold">
+                            <i class="bi bi-cpu me-2"></i> Start Biomechanical Analysis
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/athlete.js"></script>
+</body>
+</html>

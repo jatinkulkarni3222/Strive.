@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRIVE | Accessible Sports Talent Assessment</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="assets/css/strive.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-strive sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
+                <i class="bi bi-activity fs-3 text-success me-2"></i>
+                <span class="fs-4 text-white">STRIVE</span>
+                <span class="brand-badge">CV PLATFORM</span>
+            </a>
+            <div class="ms-auto d-flex gap-2">
+                <button class="btn btn-outline-light btn-sm px-3" data-bs-toggle="modal" data-bs-target="#authModal" onclick="setAuthTab('login')">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Sign In
+                </button>
+                <button class="btn btn-success btn-sm px-3" data-bs-toggle="modal" data-bs-target="#authModal" onclick="setAuthTab('register')">
+                    <i class="bi bi-person-plus me-1"></i> Get Started
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="py-5 text-center text-lg-start">
+        <div class="container py-4">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-7">
+                    <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill mb-3">
+                        <i class="bi bi-phone me-1"></i> Smartphone-Based Biomechanical CV
+                    </span>
+                    <h1 class="display-4 fw-extrabold text-white mb-3">
+                        Democratizing Sports Talent Assessment with Computer Vision
+                    </h1>
+                    <p class="lead text-secondary mb-4">
+                        STRIVE empowers athletes in rural and underserved regions to record sports movements on any ordinary smartphone. 
+                        Our pose estimation pipeline delivers objective performance scoring, injury-risk prevention, and longitudinal progress tracking.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <button class="btn btn-success btn-lg px-4" data-bs-toggle="modal" data-bs-target="#authModal" onclick="setAuthTab('register')">
+                            <i class="bi bi-camera-video me-2"></i> Assess Your Movement
+                        </button>
+                        <a href="#how-it-works" class="btn btn-outline-secondary btn-lg px-4 text-white">
+                            <i class="bi bi-play-circle me-2"></i> How It Works
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="strive-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-success text-dark fw-bold">LIVE PREVIEW</span>
+                            <span class="small text-muted"><i class="bi bi-cpu me-1"></i>MediaPipe 33 Keypoints</span>
+                        </div>
+                        <div class="video-preview-wrapper mb-3">
+                            <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&auto=format&fit=crop&q=80" 
+                                 class="img-fluid rounded" alt="Athlete Performing Squat" style="filter: brightness(0.8);">
+                            <div class="position-absolute text-center p-3" style="background: rgba(0,0,0,0.6); border-radius: 10px;">
+                                <i class="bi bi-person-bounding-box fs-1 text-success mb-2"></i>
+                                <div class="fw-bold text-white">Automated Skeleton Tracking</div>
+                                <div class="small text-info">Angle & Velocity Biomechanics</div>
+                            </div>
+                        </div>
+                        <div class="row g-2 text-center">
+                            <div class="col-4">
+                                <div class="metric-box">
+                                    <div class="metric-val text-success">90.0</div>
+                                    <div class="metric-name">Score</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="metric-box">
+                                    <div class="metric-val text-info">5</div>
+                                    <div class="metric-name">Reps</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="metric-box">
+                                    <div class="metric-val text-warning">+12.5%</div>
+                                    <div class="metric-name">Progress</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Key Pillars Section -->
+    <section id="how-it-works" class="py-5" style="background-color: rgba(15, 23, 42, 0.5);">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold text-white">Three Core User Perspectives</h2>
+                <p class="text-secondary">Designed for athletes, coaches, and scouts across grassroots ecosystems.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="strive-card p-4 h-100">
+                        <div class="rounded-circle bg-success-subtle text-success p-3 d-inline-flex mb-3">
+                            <i class="bi bi-person-walking fs-3"></i>
+                        </div>
+                        <h4 class="fw-bold text-white">1. Athlete Module</h4>
+                        <p class="text-secondary small">
+                            Capture movement video using your phone camera. Receive instant rep counts, range of motion depth scores, posture deviation analysis, and injury-prevention cues.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="strive-card p-4 h-100">
+                        <div class="rounded-circle bg-info-subtle text-info p-3 d-inline-flex mb-3">
+                            <i class="bi bi-clipboard2-pulse fs-3"></i>
+                        </div>
+                        <h4 class="fw-bold text-white">2. Coach Module</h4>
+                        <p class="text-secondary small">
+                            Monitor your athlete roster, inspect skeletal breakdowns, evaluate longitudinal consistency over training cycles, and attach tailored corrective feedback.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="strive-card p-4 h-100">
+                        <div class="rounded-circle bg-primary-subtle text-primary p-3 d-inline-flex mb-3">
+                            <i class="bi bi-binoculars fs-3"></i>
+                        </div>
+                        <h4 class="fw-bold text-white">3. Scout Discovery</h4>
+                        <p class="text-secondary small">
+                            Discover hidden sports talent from rural districts using normalized cohort rankings, multi-parameter filters (age, gender, sport), and verified biomechanical scores.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Medical Disclaimer Section -->
+    <section class="container py-4">
+        <div class="disclaimer-banner">
+            <i class="bi bi-shield-exclamation text-warning me-2"></i>
+            <strong>Important Biomechanical Disclaimer:</strong>
+            STRIVE computer vision insights, joint kinematics, and form evaluations are designed for athletic training optimization and preliminary screening. 
+            <strong>Not a medical diagnosis.</strong>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 border-top border-secondary-subtle mt-5 text-center text-secondary small">
+        <div class="container">
+            <div>STRIVE Project • Savitribai Phule Pune University (SPPU / PCCOER Ravet) • A.Y. 2026-27</div>
+            <div class="mt-1">Developed by Vedant Patil, Atharva Jadhav, Aditya Gawande, Jatin Kulkarni • Guide: Mrs. Rutuja Magar</div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal (Login / Register with Role Selection) -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content strive-card">
+                <div class="modal-header border-0 pb-0">
+                    <ul class="nav nav-pills w-100 gap-2" id="authTab" role="tablist">
+                        <li class="nav-item flex-fill" role="presentation">
+                            <button class="nav-link w-100 active fw-semibold" id="login-tab" data-bs-toggle="pill" data-bs-target="#login-pane">Sign In</button>
+                        </li>
+                        <li class="nav-item flex-fill" role="presentation">
+                            <button class="nav-link w-100 fw-semibold" id="register-tab" data-bs-toggle="pill" data-bs-target="#register-pane">Register</button>
+                        </li>
+                    </ul>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="tab-content" id="authTabContent">
+                        
+                        <!-- Login Form -->
+                        <div class="tab-pane fade show active" id="login-pane" role="tabpanel">
+                            <div id="login-alert" class="alert alert-danger d-none py-2 small"></div>
+                            <form id="loginForm" onsubmit="handleLogin(event)">
+                                <div class="mb-3">
+                                    <label class="form-label small text-secondary">Email Address</label>
+                                    <input type="email" id="loginEmail" class="form-control bg-dark text-white border-secondary" required placeholder="athlete@strive.org">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small text-secondary">Password</label>
+                                    <input type="password" id="loginPassword" class="form-control bg-dark text-white border-secondary" required placeholder="••••••••">
+                                </div>
+                                <button type="submit" id="loginBtn" class="btn btn-success w-100 py-2 fw-semibold">
+                                    Sign In to STRIVE
+                                </button>
+                                <div class="mt-3 text-center small text-secondary">
+                                    Demo accounts: <code>athlete@strive.org</code> | <code>coach@strive.org</code> | <code>scout@strive.org</code> (Password: <code>Strive@2026</code>)
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Register Form -->
+                        <div class="tab-pane fade" id="register-pane" role="tabpanel">
+                            <div id="register-alert" class="alert alert-danger d-none py-2 small"></div>
+                            <form id="registerForm" onsubmit="handleRegister(event)">
+                                <div class="mb-2">
+                                    <label class="form-label small text-secondary">Full Name</label>
+                                    <input type="text" id="regName" class="form-control bg-dark text-white border-secondary" required placeholder="Vedant Patil">
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label small text-secondary">Email Address</label>
+                                    <input type="email" id="regEmail" class="form-control bg-dark text-white border-secondary" required placeholder="vedant@example.com">
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label small text-secondary">Password</label>
+                                    <input type="password" id="regPassword" class="form-control bg-dark text-white border-secondary" required minlength="6" placeholder="At least 6 characters">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small text-secondary">Role Selection</label>
+                                    <select id="regRole" class="form-select bg-dark text-white border-secondary" onchange="toggleAthleteFields()">
+                                        <option value="ROLE_ATHLETE">Athlete (Record & Track Assessments)</option>
+                                        <option value="ROLE_COACH">Coach (Manage Athletes & Feedback)</option>
+                                        <option value="ROLE_SCOUT">Scout (Talent Discovery & Rankings)</option>
+                                    </select>
+                                </div>
+
+                                <!-- Athlete Specific Fields -->
+                                <div id="athleteFields">
+                                    <div class="row g-2 mb-2">
+                                        <div class="col-6">
+                                            <label class="form-label small text-secondary">Gender</label>
+                                            <select id="regGender" class="form-select bg-dark text-white border-secondary">
+                                                <option value="MALE">Male</option>
+                                                <option value="FEMALE">Female</option>
+                                                <option value="OTHER">Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small text-secondary">Date of Birth</label>
+                                            <input type="date" id="regDob" class="form-control bg-dark text-white border-secondary" value="2005-01-01">
+                                        </div>
+                                    </div>
+                                    <div class="row g-2 mb-2">
+                                        <div class="col-6">
+                                            <label class="form-label small text-secondary">Height (cm)</label>
+                                            <input type="number" id="regHeight" class="form-control bg-dark text-white border-secondary" value="175">
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small text-secondary">Weight (kg)</label>
+                                            <input type="number" id="regWeight" class="form-control bg-dark text-white border-secondary" value="70">
+                                        </div>
+                                    </div>
+                                    <div class="row g-2 mb-2">
+                                        <div class="col-6">
+                                            <label class="form-label small text-secondary">City / District</label>
+                                            <input type="text" id="regCity" class="form-control bg-dark text-white border-secondary" value="Pune">
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small text-secondary">Primary Sport</label>
+                                            <select id="regSport" class="form-select bg-dark text-white border-secondary">
+                                                <option value="SQUAT">Squat Assessment</option>
+                                                <option value="PUSHUP">Push-up Assessment</option>
+                                                <option value="VERTICAL_JUMP">Vertical Jump</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" id="regBtn" class="btn btn-success w-100 py-2 fw-semibold mt-2">
+                                    Create STRIVE Account
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script>
+        function setAuthTab(tab) {
+            const tabBtn = document.getElementById(tab + '-tab');
+            if (tabBtn) {
+                const pill = new bootstrap.Tab(tabBtn);
+                pill.show();
+            }
+        }
+
+        function toggleAthleteFields() {
+            const role = document.getElementById('regRole').value;
+            const fields = document.getElementById('athleteFields');
+            fields.style.display = (role === 'ROLE_ATHLETE') ? 'block' : 'none';
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const alertBox = document.getElementById('login-alert');
+            alertBox.classList.add('d-none');
+            const btn = document.getElementById('loginBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Authenticating...';
+
+            try {
+                const email = document.getElementById('loginEmail').value;
+                const pwd = document.getElementById('loginPassword').value;
+                const res = await StriveAPI.login(email, pwd);
+
+                // Redirect based on role
+                if (res.role === 'ROLE_ATHLETE') {
+                    window.location.href = 'athlete.html';
+                } else if (res.role === 'ROLE_COACH') {
+                    window.location.href = 'coach.html';
+                } else if (res.role === 'ROLE_SCOUT') {
+                    window.location.href = 'scout.html';
+                } else {
+                    window.location.href = 'athlete.html';
+                }
+            } catch (err) {
+                alertBox.textContent = err.message || 'Login failed. Please check credentials.';
+                alertBox.classList.remove('d-none');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Sign In to STRIVE';
+            }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const alertBox = document.getElementById('register-alert');
+            alertBox.classList.add('d-none');
+            const btn = document.getElementById('regBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Registering...';
+
+            try {
+                const regData = {
+                    fullName: document.getElementById('regName').value,
+                    email: document.getElementById('regEmail').value,
+                    password: document.getElementById('regPassword').value,
+                    role: document.getElementById('regRole').value,
+                    gender: document.getElementById('regGender') ? document.getElementById('regGender').value : 'MALE',
+                    dateOfBirth: document.getElementById('regDob') ? document.getElementById('regDob').value : '2005-01-01',
+                    heightCm: document.getElementById('regHeight') ? parseFloat(document.getElementById('regHeight').value) : 175.0,
+                    weightKg: document.getElementById('regWeight') ? parseFloat(document.getElementById('regWeight').value) : 70.0,
+                    city: document.getElementById('regCity') ? document.getElementById('regCity').value : 'Pune',
+                    state: 'Maharashtra',
+                    primarySport: document.getElementById('regSport') ? document.getElementById('regSport').value : 'SQUAT'
+                };
+
+                const res = await StriveAPI.register(regData);
+                if (res.role === 'ROLE_ATHLETE') {
+                    window.location.href = 'athlete.html';
+                } else if (res.role === 'ROLE_COACH') {
+                    window.location.href = 'coach.html';
+                } else if (res.role === 'ROLE_SCOUT') {
+                    window.location.href = 'scout.html';
+                } else {
+                    window.location.href = 'athlete.html';
+                }
+            } catch (err) {
+                alertBox.textContent = err.message || 'Registration failed. Please check inputs.';
+                alertBox.classList.remove('d-none');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Create STRIVE Account';
+            }
+        }
+    </script>
+</body>
+</html>

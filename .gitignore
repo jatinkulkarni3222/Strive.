@@ -1,0 +1,65 @@
+# =============================================================================
+# STRIVE - Git Ignore Configuration
+# =============================================================================
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Icon?
+
+# Python & Computer Vision Service
+cv-service/venv/
+cv-service/.venv/
+cv-service/env/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+cv-service/storage/uploads/*
+!cv-service/storage/uploads/.gitkeep
+cv-service/storage/annotated/*
+!cv-service/storage/annotated/.gitkeep
+cv-service/storage/temp/
+
+# Java & Spring Boot Backend
+backend/target/
+backend/data/
+backend/storage/uploads/*
+!backend/storage/uploads/.gitkeep
+backend/storage/annotated/*
+!backend/storage/annotated/.gitkeep
+*.class
+*.jar
+*.war
+*.ear
+*.log
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# Bundled offline tools
+tools/
+
+# Database files
+*.db
+*.mv.db
+*.trace.db
+
+# IDE & Editor files
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.project
+.classpath
+.settings/
+
+# Temporary files
+tmp/
+*.tmp
+*.swp
+*~

@@ -1,0 +1,221 @@
+{
+  "info": {
+    "name": "STRIVE Sports Talent Assessment API",
+    "_postman_id": "7f8b9e10-1234-5678-9abc-striveproject2026",
+    "description": "Comprehensive Postman API Collection for STRIVE Smartphone-Based Biomechanical Sports Assessment Platform.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Register Athlete",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Vedant Patil\",\n  \"email\": \"athlete@strive.org\",\n  \"password\": \"Strive@2026\",\n  \"role\": \"ROLE_ATHLETE\",\n  \"gender\": \"MALE\",\n  \"dateOfBirth\": \"2004-05-14\",\n  \"heightCm\": 178.0,\n  \"weightKg\": 72.5,\n  \"city\": \"Pune\",\n  \"state\": \"Maharashtra\",\n  \"primarySport\": \"SQUAT\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"]}
+          }
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.environment.set(\"jwt_token\", jsonData.token);",
+                  "    pm.environment.set(\"athleteId\", jsonData.athleteProfileId || 1);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"athlete@strive.org\",\n  \"password\": \"Strive@2026\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Video & Assessment",
+      "item": [
+        {
+          "name": "Upload & Assess Video",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {"key": "athleteId", "value": "{{athleteId}}", "type": "text"},
+                {"key": "sport", "value": "SQUAT", "type": "text"},
+                {"key": "video", "type": "file", "src": "data/samples/sample_squat.mp4"}
+              ]
+            },
+            "url": {"raw": "{{baseUrl}}/api/assessments/upload", "host": ["{{baseUrl}}"], "path": ["api", "assessments", "upload"]}
+          }
+        },
+        {
+          "name": "Get Assessment By ID",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": {"raw": "{{baseUrl}}/api/assessments/1", "host": ["{{baseUrl}}"], "path": ["api", "assessments", "1"]}
+          }
+        },
+        {
+          "name": "Get Athlete Assessment History",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": {"raw": "{{baseUrl}}/api/assessments/athlete/{{athleteId}}", "host": ["{{baseUrl}}"], "path": ["api", "assessments", "athlete", "{{athleteId}}"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Longitudinal Progress Tracking",
+      "item": [
+        {
+          "name": "Get Longitudinal Progress (Eq 1.9.9)",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{jwt_token}}"}],
+            "url": {
+              "raw": "{{baseUrl}}/api/athlete/{{athleteId}}/progress?sport=SQUAT",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "athlete", "{{athleteId}}", "progress"],
+              "query": [{"key": "sport", "value": "SQUAT"}]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Leaderboards & Rankings",
+      "item": [
+        {
+          "name": "Get Cohort Leaderboard (Eq 1.9.10)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/rankings?sport=SQUAT&gender=MALE&ageGroup=U-21",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rankings"],
+              "query": [
+                {"key": "sport", "value": "SQUAT"},
+                {"key": "gender", "value": "MALE"},
+                {"key": "ageGroup", "value": "U-21"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Coach Module",
+      "item": [
+        {
+          "name": "Get Coach Athletes",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{coach_jwt_token}}"}],
+            "url": {"raw": "{{baseUrl}}/api/coach/athletes", "host": ["{{baseUrl}}"], "path": ["api", "coach", "athletes"]}
+          }
+        },
+        {
+          "name": "Submit Coach Feedback",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{coach_jwt_token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"athleteId\": {{athleteId}},\n  \"feedbackNotes\": \"Solid squat depth. Needs to focus on knee tracking over toes to prevent inward valgus.\"\n}"
+            },
+            "url": {"raw": "{{baseUrl}}/api/coach/feedback", "host": ["{{baseUrl}}"], "path": ["api", "coach", "feedback"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Scout Module",
+      "item": [
+        {
+          "name": "Search Talent",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{scout_jwt_token}}"}],
+            "url": {
+              "raw": "{{baseUrl}}/api/scout/athletes?sport=SQUAT&minScore=80",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "scout", "athletes"],
+              "query": [
+                {"key": "sport", "value": "SQUAT"},
+                {"key": "minScore", "value": "80"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Athlete Details Dossier",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{scout_jwt_token}}"}],
+            "url": {"raw": "{{baseUrl}}/api/scout/athletes/{{athleteId}}", "host": ["{{baseUrl}}"], "path": ["api", "scout", "athletes", "{{athleteId}}"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. CV Service Direct",
+      "item": [
+        {
+          "name": "CV Service Health",
+          "request": {
+            "method": "GET",
+            "url": {"raw": "{{cvBaseUrl}}/health", "host": ["{{cvBaseUrl}}"], "path": ["health"]}
+          }
+        },
+        {
+          "name": "Direct Analyze Video",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {"key": "sport", "value": "squat", "type": "text"},
+                {"key": "video", "type": "file", "src": "data/samples/sample_squat.mp4"}
+              ]
+            },
+            "url": {"raw": "{{cvBaseUrl}}/analyze", "host": ["{{cvBaseUrl}}"], "path": ["analyze"]}
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:8080", "type": "string"},
+    {"key": "cvBaseUrl", "value": "http://localhost:8000", "type": "string"},
+    {"key": "jwt_token", "value": "", "type": "string"},
+    {"key": "coach_jwt_token", "value": "", "type": "string"},
+    {"key": "scout_jwt_token", "value": "", "type": "string"},
+    {"key": "athleteId", "value": "1", "type": "string"}
+  ]
+}

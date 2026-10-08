@@ -1,0 +1,2 @@
+"""STRIVE Computer Vision Service."""
+__version__ = "1.0.0"
